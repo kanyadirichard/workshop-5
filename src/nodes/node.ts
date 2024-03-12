@@ -40,7 +40,22 @@ export async function node(
 
   // TODO implement this
   // get the current state of a node
-  // node.get("/getState", (req, res) => {});
+  node.get("/getState", (req, res) => {
+    try {
+      // Gather node state information
+      const state: NodeState = {
+        killed: false, // Assume not killed unless implemented elsewhere
+        x: isFaulty ? null : getCurrentConsensusValue(), // Replace with actual logic
+        decided: isFaulty ? null : hasReachedFinality(), // Replace with actual logic
+        k: isFaulty ? null : getCurrentStep(), // Replace with actual logic
+      };
+  
+      res.json(state);
+    } catch (error) {
+      console.error("Error retrieving node state:", error);
+      res.status(500).json({ error: "Failed to retrieve node state" });
+    }
+  });
 
   // start the server
   const server = node.listen(BASE_NODE_PORT + nodeId, async () => {

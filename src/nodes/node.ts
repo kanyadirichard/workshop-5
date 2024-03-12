@@ -20,9 +20,9 @@ export async function node(
   // this route allows retrieving the current status of the node
   node.get("/status", (req, res) => {
     if (isFaulty) {
-      return res.status(500).json({ message: "faulty" });
+      res.status(500).send("faulty");
     } else {
-      return res.status(200).json({ message: "live" });
+      res.status(200).send("live");
     }
   });
 
